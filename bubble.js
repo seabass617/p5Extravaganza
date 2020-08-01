@@ -18,8 +18,8 @@ class Bubble {
 	//to declare this functionality. Also, note that you 
 	//have to refer to your variable as this.__
 	move(){
-		this.x = this.x + random(-1,1);
-		this.y = this.y + random(-1,1);
+		this.x = this.x + random(-5,5);
+		this.y = this.y + random(-5,5);
 	}
 
 	show(){
