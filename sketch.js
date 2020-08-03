@@ -2,27 +2,26 @@
 // Sketch File 
 //============================================
 
-let bubble1; 
-let bubble2;
-
 function setup() {
 	createCanvas(windowWidth,windowHeight);
-	bubble1= new Bubble(200,200,50);
-	bubble2= new Bubble(300,200,50);
-
-}
-
+   
+  }
+  
 function draw() {
 	background(0);
-
-	if (bubble1.intersects(bubble2)) {
-		background(200,0,100);
-	}
-
-	bubble1.show();
-	bubble2.show();
-	bubble1.move();
-	bubble2.move();
+	strokeWeight(2);
+	stroke(255);
+  
+	//first for loop is for the x's
+	for (var x = 0; x <= width; x+=50){
+		//for every x, do the following for every y
+		for (var y = 0; y <= height; y+=50){
+			//then execute this code based on that
+			fill(random(255),0,random(255));
+			ellipse(x,y,25,25);
+		  }
+	  }
+	   
 }
 
 
