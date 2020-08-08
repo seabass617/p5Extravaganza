@@ -1,0 +1,14 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+  h1 {
+      font-size: 30px;
+      color: white;
+      background-color: black;
+      width: 20%;
+      text-align: center;
+      padding: 10px 0;
+      margin-left: 15px;
+      
+  }
