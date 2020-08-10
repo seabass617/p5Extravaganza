@@ -2,14 +2,18 @@
 // Sketch File 
 //============================================
 
-let characterSize = 45;
+let characterSize = 30;
 let streams = [];
+let character_array = [];
 
 function setup() {
 	createCanvas (window.innerWidth, window.innerHeight);
 	background(0);
 	let x = 0;
-
+	// Populate the characters array
+	character_array = populate_characters_array();
+	
+	// Create individual streams and push it to the group 
 	for (let i = 0; i <= width / characterSize; i++){
 		let stream = new Stream();
 		stream.generateCharacters(x, random(-1000,0));
@@ -46,9 +50,9 @@ class Stream {
 	}
 
 	render(){
-		this.characters.forEach(function(character) {
+	this.characters.forEach(function(character) {
 			if (character.first) {
-				fill(225,150,100);
+		fill(225,150,100);
 			}else {
 				fill(200,50,255);
 			}
@@ -72,20 +76,32 @@ class Character {
 
 	setToRandomCharacter(){
 		if (frameCount % this.switchInterval == 0){
-			this.value  = String.fromCharCode(
-				0x30A0 + round(random(0, 96))
-			); 
+			//this.value  = String.fromCharCode(
+			//	0x30A0 + round(random(0, 96))); 
+			this.value = character_array[Math.floor(Math.random() * character_array.length)];
 		}
 	}
 
 	rain(){
 		this.y = (this.y >= height) ? 0 : this.y += this.fall_speed;
 	}
+
 }
 
+function populate_characters_array(){
+	array = [];
 
+	for (let i = 0; i <= 96; i++){
+		array.push(String.fromCharCode(0x30A0 + i));
+	};
 
+	// for (let i = 65; i <= 90; i++){
+	// 	array.push(String.fromCharCode(i));
+	// };
 
+	for (let i = 0; i <= 9; i++){
+		array.push(`${i}`)
+	};
 
-
-
+	return array
+}
