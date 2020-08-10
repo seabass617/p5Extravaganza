@@ -2,32 +2,39 @@
 // Sketch File 
 //============================================
 
-let characterSize = 60;
+let characterSize = 45;
+let streams = [];
 
 function setup() {
 	createCanvas (window.innerWidth, window.innerHeight);
 	background(0);
-	stream = new Stream();
-	stream.generateCharacters();
+	let x = 0;
+
+	for (let i = 0; i <= width / characterSize; i++){
+		let stream = new Stream();
+		stream.generateCharacters(x, random(-1000,0));
+		streams.push(stream);
+		x += characterSize;
+	}
 	textSize(characterSize);
 }
   
 function draw() {
 	background(0);
-	stream.render();
+	streams.forEach(function(stream){
+		stream.render();
+	});
 }
 
 
 class Stream {
-	constructor(){
+	constructor(speed){
 		this.characters = [];
-		this.totalCharacters = round(random(5,30));
-		this.speed = random(5,20);
+		this.totalCharacters = round(random(5,20)); //<----- Total Characters
+		this.speed = random(5,10); //<------ Fall Speed
 	}
 
-	generateCharacters(){
-		let y = 0;
-		let x = width / 2; 
+	generateCharacters(x, y){
 		for (let i = 0; i <= this.totalCharacters; i++){
 			let character = new Character(x, y, this.speed);
 			character.setToRandomCharacter();
