@@ -48,9 +48,9 @@ class Stream {
 	render(){
 		this.characters.forEach(function(character) {
 			if (character.first) {
-				fill(180,255,180);
+				fill(200,150,100);
 			}else {
-				fill(0,255,70);
+				fill(148,0,211);
 			}
 			text(character.value, character.x, character.y);
 			character.setToRandomCharacter();
