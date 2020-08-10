@@ -20,7 +20,7 @@ function setup() {
 }
   
 function draw() {
-	background(0);
+	background(0, 125);
 	streams.forEach(function(stream){
 		stream.render();
 	});
@@ -35,17 +35,23 @@ class Stream {
 	}
 
 	generateCharacters(x, y){
+		let first = round(random(0,4)) == 1; //<<-------- Coding coin toss! 
 		for (let i = 0; i <= this.totalCharacters; i++){
-			let character = new Character(x, y, this.speed);
+			let character = new Character(x, y, this.speed, first);
 			character.setToRandomCharacter();
 			this.characters.push(character);
 			y -= characterSize;
+			first = false;
 		}
 	}
 
 	render(){
 		this.characters.forEach(function(character) {
-			fill(0,255,70);
+			if (character.first) {
+				fill(180,255,180);
+			}else {
+				fill(0,255,70);
+			}
 			text(character.value, character.x, character.y);
 			character.setToRandomCharacter();
 			character.rain();
@@ -55,12 +61,13 @@ class Stream {
 
 
 class Character {
-	constructor(x, y, fall_speed){
+	constructor(x, y, fall_speed, first){
 		this.x = x;
 		this.y = y;
 		this.value;
 		this.fall_speed = fall_speed;
 		this.switchInterval = round(random(10,20));
+		this.first = first;
 	}
 
 	setToRandomCharacter(){
