@@ -1,44 +1,74 @@
 //============================================
 // Sketch File 
 //============================================
-let canvas;
-let pos,target,vel,r,drag,strength,dragSlider,strengthSlider;
+
+let characterSize = 60;
+
 function setup() {
-	canvas = createCanvas(windowWidth,windowHeight);
-	canvas.position(0,0);
-	canvas.style('z-index','-1');
-
-	noStroke();
-	
-	r = 60;
-	position = 0;
-	//target is the position of where the mouse is 
-	target = 0;
-	velocity = 0;
-
-	drag = .8;
-	strength = 0.1;
-  }
+	createCanvas (window.innerWidth, window.innerHeight);
+	background(0);
+	stream = new Stream();
+	stream.generateCharacters();
+	textSize(characterSize);
+}
   
 function draw() {
 	background(0);
-
-	target = mouseX;
-	//position = mouseX;
-
-	let force = target - position;
-	force *= strength;
-	
-	velocity *= drag; 
-	velocity += force;
-	position += velocity; 
-
-	//draw circle 
-	fill(214,71,150);
-	ellipse(position,windowHeight/2,r);
-	
-	   
+	stream.render();
 }
+
+
+class Stream {
+	constructor(){
+		this.characters = [];
+		this.totalCharacters = round(random(5,30));
+		this.speed = random(5,20);
+	}
+
+	generateCharacters(){
+		let y = 0;
+		let x = width / 2; 
+		for (let i = 0; i <= this.totalCharacters; i++){
+			let character = new Character(x, y, this.speed);
+			character.setToRandomCharacter();
+			this.characters.push(character);
+			y -= characterSize;
+		}
+	}
+
+	render(){
+		this.characters.forEach(function(character) {
+			fill(0,255,70);
+			text(character.value, character.x, character.y);
+			character.setToRandomCharacter();
+			character.rain();
+		});
+	}
+}
+
+
+class Character {
+	constructor(x, y, fall_speed){
+		this.x = x;
+		this.y = y;
+		this.value;
+		this.fall_speed = fall_speed;
+		this.switchInterval = round(random(10,20));
+	}
+
+	setToRandomCharacter(){
+		if (frameCount % this.switchInterval == 0){
+			this.value  = String.fromCharCode(
+				0x30A0 + round(random(0, 96))
+			); 
+		}
+	}
+
+	rain(){
+		this.y = (this.y >= height) ? 0 : this.y += this.fall_speed;
+	}
+}
+
 
 
 
